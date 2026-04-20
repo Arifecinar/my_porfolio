@@ -7,13 +7,13 @@ import { FaGithub } from "react-icons/fa";
 
 const projects = [
   {
-    title: "Mobil Nesne Sayım Uygulaması",
+    title: "Taş Hukuk & Danışmanlık",
     description:
-      "YOLO algoritması kullanılarak geliştirilen, gerçek zamanlı kamera görüntüsü üzerinden raf dizilimi veya ürün sayımı yapabilen performanslı mobil uygulama.",
-    tags: ["React Native", "YOLO", "Python API"],
-    image: "/object_counter_mockup.png",
-    githubUrl: "#",
-    liveUrl: "#",
+      "Kurumsal bir hukuk bürosu için tasarımı ve geliştirmesi yapılan, SEO performansı yüksek, premium kurumsal web sitesi.",
+    tags: ["Next.js", "Tailwind CSS", "Corporate UI"],
+    image: "/taslawfirm_mockup.png",
+    githubUrl: "",
+    liveUrl: "https://www.taslawfirm.com.tr/tr",
   },
   {
     title: "Full-Stack E-Ticaret Sitesi",
@@ -113,24 +113,28 @@ export default function Projects() {
 
                 {/* Action Buttons */}
                 <div className="flex items-center gap-4 mt-auto pt-4 border-t border-cream-dark/30">
-                  <motion.a
-                    href={project.githubUrl}
-                    className="flex flex-1 items-center justify-center gap-2 px-4 py-2.5 bg-gray-light hover:bg-cream-dark text-text-primary text-sm font-semibold rounded-xl transition-colors"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    <FaGithub className="text-lg" />
-                    <span>GitHub</span>
-                  </motion.a>
-                  <motion.a
-                    href={project.liveUrl}
-                    className="flex flex-1 items-center justify-center gap-2 px-4 py-2.5 bg-green-dark hover:bg-green-light text-white text-sm font-semibold rounded-xl shadow-md transition-colors"
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    <span>Live Demo</span>
-                    <HiExternalLink className="text-xl" />
-                  </motion.a>
+                  {project.githubUrl && (
+                    <motion.a
+                      href={project.githubUrl}
+                      className="flex flex-1 items-center justify-center gap-2 px-4 py-2.5 bg-gray-light hover:bg-cream-dark text-text-primary text-sm font-semibold rounded-xl transition-colors"
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      <FaGithub className="text-lg" />
+                      <span>GitHub</span>
+                    </motion.a>
+                  )}
+                  {project.liveUrl && (
+                    <motion.a
+                      href={project.liveUrl}
+                      className="flex flex-1 items-center justify-center gap-2 px-4 py-2.5 bg-green-dark hover:bg-green-light text-white text-sm font-semibold rounded-xl shadow-md transition-colors"
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                    >
+                      <span>Live Demo</span>
+                      <HiExternalLink className="text-xl" />
+                    </motion.a>
+                  )}
                 </div>
               </div>
             </motion.div>
