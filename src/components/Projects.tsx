@@ -16,13 +16,13 @@ const projects = [
     liveUrl: "https://www.taslawfirm.com.tr/tr",
   },
   {
-    title: "Full-Stack E-Commerce Platform",
+    title: "MSE Hotspot Management System",
     description:
-      "A modern e-commerce platform offering a premium user experience, secure payment infrastructure, and advanced product filtering capabilities.",
-    tags: ["React", ".NET API", "PostgreSQL", "Tailwind CSS"],
-    image: "/ecommerce_mockup.png",
-    githubUrl: "#",
-    liveUrl: "#",
+      "A comprehensive hotspot authentication and management portal providing secure Wi-Fi access control and analytical features.",
+    tags: ["React", "TypeScript", "Tailwind CSS"],
+    image: "/mse_hotspot_mockup.png",
+    githubUrl: "",
+    liveUrl: "",
   },
   {
     title: "AI-Powered Medical Imaging",
@@ -112,30 +112,32 @@ export default function Projects() {
                 </p>
 
                 {/* Action Buttons */}
-                <div className="flex items-center gap-4 mt-auto pt-4 border-t border-cream-dark/30">
-                  {project.githubUrl && (
-                    <motion.a
-                      href={project.githubUrl}
-                      className="flex flex-1 items-center justify-center gap-2 px-4 py-2.5 bg-gray-light hover:bg-cream-dark text-text-primary text-sm font-semibold rounded-xl transition-colors"
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                    >
-                      <FaGithub className="text-lg" />
-                      <span>GitHub</span>
-                    </motion.a>
-                  )}
-                  {project.liveUrl && (
-                    <motion.a
-                      href={project.liveUrl}
-                      className="flex flex-1 items-center justify-center gap-2 px-4 py-2.5 bg-green-dark hover:bg-green-light text-white text-sm font-semibold rounded-xl shadow-md transition-colors"
-                      whileHover={{ scale: 1.03 }}
-                      whileTap={{ scale: 0.97 }}
-                    >
-                      <span>Live Demo</span>
-                      <HiExternalLink className="text-xl" />
-                    </motion.a>
-                  )}
-                </div>
+                {(project.githubUrl || project.liveUrl) && (
+                  <div className="flex items-center gap-4 mt-auto pt-4 border-t border-cream-dark/30">
+                    {project.githubUrl && (
+                      <motion.a
+                        href={project.githubUrl}
+                        className="flex flex-1 items-center justify-center gap-2 px-4 py-2.5 bg-gray-light hover:bg-cream-dark text-text-primary text-sm font-semibold rounded-xl transition-colors"
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.97 }}
+                      >
+                        <FaGithub className="text-lg" />
+                        <span>GitHub</span>
+                      </motion.a>
+                    )}
+                    {project.liveUrl && (
+                      <motion.a
+                        href={project.liveUrl}
+                        className="flex flex-1 items-center justify-center gap-2 px-4 py-2.5 bg-green-dark hover:bg-green-light text-white text-sm font-semibold rounded-xl shadow-md transition-colors"
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.97 }}
+                      >
+                        <span>Live Demo</span>
+                        <HiExternalLink className="text-xl" />
+                      </motion.a>
+                    )}
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}
