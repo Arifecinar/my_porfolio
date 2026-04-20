@@ -1,73 +1,59 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { HiArrowRight } from "react-icons/hi";
-import React from "react";
 
-// Premium 3D Parallax Profile Image Component
+// Elegant Profile Image Component with Waving Emoji
 function ProfileImage() {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 15 });
-  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 15 });
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    x.set(mouseX / width - 0.5);
-    y.set(mouseY / height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
   return (
     <motion.div
-      className="absolute inset-8 z-10"
-      style={{ perspective: 1000 }}
-      initial={{ opacity: 0, filter: "blur(15px)" }}
-      animate={{ opacity: 1, filter: "blur(0px)" }}
-      transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+      className="absolute inset-8 z-10 cursor-pointer"
+      initial="initial"
+      animate="animate"
+      whileHover="hover"
     >
-      <motion.div
-        className="w-full h-full relative"
-        animate={{ y: [0, -12, 0] }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
+      <motion.div 
+        className="w-full h-full rounded-full bg-gradient-to-br from-cream to-cream-dark border-4 border-white overflow-hidden flex items-center justify-center relative"
+        variants={{
+          initial: { opacity: 0, scale: 0.8 },
+          animate: { 
+            opacity: 1, 
+            scale: 1, 
+            transition: { duration: 0.8, ease: "easeOut", delay: 0.2 } 
+          },
+          hover: { 
+            scale: 1.05, 
+            boxShadow: "0 0 40px rgba(212, 168, 67, 0.4)", // soft warm glow
+            transition: { duration: 0.4, ease: "easeOut" } 
+          }
         }}
       >
-        <motion.div
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-          className="w-full h-full rounded-full bg-gradient-to-br from-cream to-cream-dark shadow-2xl border-4 border-white cursor-pointer relative flex items-center justify-center transform-gpu"
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.3 }}
+        <img
+          src="/memoji.png"
+          alt="Arife Memoji"
+          className="w-full h-full object-cover"
+        />
+      </motion.div>
+
+      {/* Waving emoji badge */}
+      <motion.div 
+        className="absolute bottom-2 right-2 w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg border border-cream-dark/20 z-20 text-3xl"
+        variants={{
+          initial: { opacity: 0, scale: 0 },
+          animate: { opacity: 1, scale: 1, transition: { duration: 0.5, delay: 0.8, type: "spring" } }
+        }}
+      >
+        <motion.span
+          className="origin-bottom-right inline-block"
+          variants={{
+            hover: { 
+              rotate: [0, -20, 20, -15, 15, -10, 10, 0], 
+              transition: { duration: 1.5, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.2 } 
+            }
+          }}
         >
-          {/* Parallax effect on the image itself */}
-          <motion.img
-            src="/memoji.png"
-            alt="Arife Memoji"
-            className="w-full h-full object-cover rounded-full"
-            style={{ translateZ: 50 }}
-          />
-          {/* Subtle reflection overlay */}
-          <div 
-            className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/10 to-white/30 pointer-events-none" 
-            style={{ translateZ: 60 }}
-          />
-        </motion.div>
+          👋
+        </motion.span>
       </motion.div>
     </motion.div>
   );
