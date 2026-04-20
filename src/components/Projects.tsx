@@ -1,162 +1,46 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { motion, useInView, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { HiExternalLink, HiCode } from "react-icons/hi";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { HiExternalLink } from "react-icons/hi";
+import { FaGithub } from "react-icons/fa";
 
 const projects = [
   {
-    title: "E-Commerce Platform",
+    title: "Mobil Nesne Sayım Uygulaması",
     description:
-      "A full-featured e-commerce web application with product management, cart functionality, and secure checkout. Built with React frontend and .NET backend API.",
-    tags: ["React", ".NET", "REST API", "SQL"],
-    gradient: "from-green-dark to-green-light",
-    emoji: "🛒",
+      "YOLO algoritması kullanılarak geliştirilen, gerçek zamanlı kamera görüntüsü üzerinden raf dizilimi veya ürün sayımı yapabilen performanslı mobil uygulama.",
+    tags: ["React Native", "YOLO", "Python API"],
+    image: "/object_counter_mockup.png",
+    githubUrl: "#",
+    liveUrl: "#",
   },
   {
-    title: "Diabetic Retinopathy Detection",
+    title: "Full-Stack E-Ticaret Sitesi",
     description:
-      "AI-powered medical imaging system that detects diabetic retinopathy from retinal images using computer vision and deep learning techniques.",
-    tags: ["Python", "Computer Vision", "Deep Learning", "TensorFlow"],
-    gradient: "from-yellow-warm to-accent",
-    emoji: "👁️",
+      "Premium kullanıcı deneyimine sahip, güvenli ödeme altyapısı ve gelişmiş ürün filtreleme seçenekleri sunan modern e-ticaret platformu.",
+    tags: ["React", ".NET API", "PostgreSQL", "Tailwind CSS"],
+    image: "/ecommerce_mockup.png",
+    githubUrl: "#",
+    liveUrl: "#",
   },
   {
-    title: "Mobile Object Counter",
+    title: "AI Tabanlı Tıbbi Görüntüleme",
     description:
-      "Real-time object counting mobile application using YOLO model for accurate product detection and counting via camera feed.",
-    tags: ["React Native", "YOLO", "Python", "Mobile"],
-    gradient: "from-green-light to-green-muted",
-    emoji: "📱",
-  },
-  {
-    title: "Blog & CMS Platform",
-    description:
-      "Modern blog platform with content management system, markdown support, SEO optimization, and responsive design for writers and readers.",
-    tags: ["Next.js", "PostgreSQL", "Tailwind CSS", "CMS"],
-    gradient: "from-green-dark to-yellow-warm",
-    emoji: "✍️",
+      "Retina taramaları üzerinden diyabetik retinopati tespiti yapabilen, medikal verileri analiz eden yüksek doğruluk oranlı yapay zeka sistemi.",
+    tags: ["Python", "Görüntü İşleme", "Deep Learning"],
+    image: "/medical_ai_mockup.png",
+    githubUrl: "#",
+    liveUrl: "#",
   },
 ];
-
-function ProjectCard({ project, index }: { project: typeof projects[number]; index: number }) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 15 });
-  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 15 });
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
-
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    x.set(mouseX / width - 0.5);
-    y.set(mouseY / height - 0.5);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-    setIsHovered(false);
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 80 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.15 }}
-      className="card-3d"
-    >
-      <motion.div
-        onMouseMove={handleMouseMove}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={handleMouseLeave}
-        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-shadow duration-500 border border-cream-dark/30 cursor-pointer"
-      >
-        {/* Card Header / Image Area */}
-        <div
-          className={`relative h-48 bg-gradient-to-br ${project.gradient} flex items-center justify-center overflow-hidden`}
-        >
-          <motion.span
-            className="text-6xl"
-            animate={isHovered ? { scale: 1.3, rotate: 10 } : { scale: 1, rotate: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            {project.emoji}
-          </motion.span>
-
-          {/* Overlay pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full" />
-            <div className="absolute bottom-4 left-4 w-12 h-12 border-2 border-white rounded-lg rotate-45" />
-          </div>
-
-          {/* Hover overlay */}
-          <motion.div
-            className="absolute inset-0 bg-black/40 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          >
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="w-12 h-12 rounded-full bg-white text-green-dark flex items-center justify-center shadow-lg"
-            >
-              <HiExternalLink className="w-5 h-5" />
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              className="w-12 h-12 rounded-full bg-white text-green-dark flex items-center justify-center shadow-lg"
-            >
-              <HiCode className="w-5 h-5" />
-            </motion.button>
-          </motion.div>
-        </div>
-
-        {/* Card Body */}
-        <div className="p-6">
-          <h3
-            className="text-xl font-bold text-text-primary mb-2"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            {project.title}
-          </h3>
-          <p className="text-text-secondary text-sm leading-relaxed mb-4">
-            {project.description}
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {project.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs font-medium px-3 py-1 rounded-full bg-cream text-green-dark border border-cream-dark/30"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
 
 export default function Projects() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="projects" className="py-24 md:py-32 relative">
+    <section id="projects" className="py-24 md:py-32 relative bg-background">
       <div className="max-w-7xl mx-auto px-6" ref={ref}>
         {/* Section Header */}
         <motion.div
@@ -180,10 +64,76 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 gap-8">
+        {/* Projects Grid: 1 col on mobile, 2 on tablet, 3 on desktop */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i} />
+            <motion.div
+              key={project.title}
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.15 * i }}
+              whileHover={{ y: -10 }}
+              className="group flex flex-col bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-cream-dark/40"
+            >
+              {/* Image Area */}
+              <div className="relative h-56 w-full overflow-hidden bg-cream flex-shrink-0">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover origin-center transform group-hover:scale-105 transition-transform duration-500 ease-out"
+                />
+                {/* Fallback gradient overlay for better contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+              </div>
+
+              {/* Content Area */}
+              <div className="p-6 flex flex-col flex-grow">
+                {/* Badges */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 bg-cream-dark/40 text-green-dark text-xs font-bold rounded-full"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Title & Description */}
+                <h3
+                  className="text-xl font-bold text-text-primary mb-2 line-clamp-1"
+                  style={{ fontFamily: "var(--font-display)" }}
+                >
+                  {project.title}
+                </h3>
+                <p className="text-text-secondary text-sm leading-relaxed mb-6 line-clamp-2 flex-grow">
+                  {project.description}
+                </p>
+
+                {/* Action Buttons */}
+                <div className="flex items-center gap-4 mt-auto pt-4 border-t border-cream-dark/30">
+                  <motion.a
+                    href={project.githubUrl}
+                    className="flex flex-1 items-center justify-center gap-2 px-4 py-2.5 bg-gray-light hover:bg-cream-dark text-text-primary text-sm font-semibold rounded-xl transition-colors"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <FaGithub className="text-lg" />
+                    <span>GitHub</span>
+                  </motion.a>
+                  <motion.a
+                    href={project.liveUrl}
+                    className="flex flex-1 items-center justify-center gap-2 px-4 py-2.5 bg-green-dark hover:bg-green-light text-white text-sm font-semibold rounded-xl shadow-md transition-colors"
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <span>Live Demo</span>
+                    <HiExternalLink className="text-xl" />
+                  </motion.a>
+                </div>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
