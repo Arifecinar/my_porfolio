@@ -1,7 +1,77 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { HiArrowRight } from "react-icons/hi";
+import React from "react";
+
+// Premium 3D Parallax Profile Image Component
+function ProfileImage() {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 150, damping: 15 });
+  const mouseYSpring = useSpring(y, { stiffness: 150, damping: 15 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    x.set(mouseX / width - 0.5);
+    y.set(mouseY / height - 0.5);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      className="absolute inset-8 z-10"
+      style={{ perspective: 1000 }}
+      initial={{ opacity: 0, filter: "blur(15px)" }}
+      animate={{ opacity: 1, filter: "blur(0px)" }}
+      transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+    >
+      <motion.div
+        className="w-full h-full relative"
+        animate={{ y: [0, -12, 0] }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <motion.div
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+          style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+          className="w-full h-full rounded-full bg-gradient-to-br from-cream to-cream-dark shadow-2xl border-4 border-white cursor-pointer relative flex items-center justify-center transform-gpu"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+        >
+          {/* Parallax effect on the image itself */}
+          <motion.img
+            src="/memoji.png"
+            alt="Arife Memoji"
+            className="w-full h-full object-cover rounded-full"
+            style={{ translateZ: 50 }}
+          />
+          {/* Subtle reflection overlay */}
+          <div 
+            className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/10 to-white/30 pointer-events-none" 
+            style={{ translateZ: 60 }}
+          />
+        </motion.div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default function Hero() {
   return (
@@ -153,42 +223,26 @@ export default function Hero() {
                 transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
               />
 
-              {/* Center profile image with spring entry and wave hover */}
-              <motion.div
-                className="absolute inset-8 rounded-full bg-gradient-to-br from-cream to-cream-dark flex items-center justify-center shadow-2xl overflow-hidden border-4 border-white z-10 cursor-pointer"
-                initial={{ y: 100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ type: "spring", stiffness: 150, damping: 12, delay: 0.4 }}
-              >
-                <motion.img
-                  src="/memoji.png"
-                  alt="Arife Memoji"
-                  className="w-full h-full object-cover"
-                  whileHover={{
-                    scale: 1.15,
-                    rotate: [0, -12, 12, -8, 8, -4, 4, 0],
-                  }}
-                  transition={{ duration: 0.6, ease: "easeInOut" }}
-                />
-              </motion.div>
+              {/* Advanced UI Animated Profile Image */}
+              <ProfileImage />
 
               {/* Floating badges */}
               <motion.div
-                className="absolute -top-2 right-8 px-3 py-1.5 bg-white rounded-full shadow-lg text-sm font-medium text-green-dark"
+                className="absolute -top-2 right-8 px-3 py-1.5 bg-white rounded-full shadow-lg text-sm font-medium text-green-dark z-20"
                 animate={{ y: [-5, 5, -5] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               >
                 React.js ⚛️
               </motion.div>
               <motion.div
-                className="absolute bottom-8 -left-4 px-3 py-1.5 bg-white rounded-full shadow-lg text-sm font-medium text-green-dark"
+                className="absolute bottom-8 -left-4 px-3 py-1.5 bg-white rounded-full shadow-lg text-sm font-medium text-green-dark z-20"
                 animate={{ y: [5, -5, 5] }}
                 transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
               >
                 Next.js 🚀
               </motion.div>
               <motion.div
-                className="absolute bottom-0 right-4 px-3 py-1.5 bg-white rounded-full shadow-lg text-sm font-medium text-green-dark"
+                className="absolute bottom-0 right-4 px-3 py-1.5 bg-white rounded-full shadow-lg text-sm font-medium text-green-dark z-20"
                 animate={{ y: [-3, 7, -3] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               >
