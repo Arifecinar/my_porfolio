@@ -153,15 +153,24 @@ export default function Hero() {
                 transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
               />
 
-              {/* Center circle with initials */}
-              <div className="absolute inset-8 rounded-full bg-gradient-to-br from-green-dark to-green-light flex items-center justify-center shadow-2xl">
-                <span
-                  className="text-6xl md:text-7xl font-bold text-white"
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  AÇ
-                </span>
-              </div>
+              {/* Center profile image with spring entry and wave hover */}
+              <motion.div
+                className="absolute inset-8 rounded-full bg-gradient-to-br from-cream to-cream-dark flex items-center justify-center shadow-2xl overflow-hidden border-4 border-white z-10 cursor-pointer"
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 150, damping: 12, delay: 0.4 }}
+              >
+                <motion.img
+                  src="/memoji.png"
+                  alt="Arife Memoji"
+                  className="w-full h-full object-cover"
+                  whileHover={{
+                    scale: 1.15,
+                    rotate: [0, -12, 12, -8, 8, -4, 4, 0],
+                  }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                />
+              </motion.div>
 
               {/* Floating badges */}
               <motion.div
