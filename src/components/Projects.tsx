@@ -7,28 +7,28 @@ import { FaGithub } from "react-icons/fa";
 
 const projects = [
   {
-    title: "Taş Hukuk & Danışmanlık",
+    title: "Tas Law Firm Website",
     description:
-      "Kurumsal bir hukuk bürosu için tasarımı ve geliştirmesi yapılan, SEO performansı yüksek, premium kurumsal web sitesi.",
+      "A premium corporate website designed and developed for a law firm, featuring high SEO performance, mobile responsiveness, and a modern UI.",
     tags: ["Next.js", "Tailwind CSS", "Corporate UI"],
     image: "/taslawfirm_mockup.png",
     githubUrl: "",
     liveUrl: "https://www.taslawfirm.com.tr/tr",
   },
   {
-    title: "Full-Stack E-Ticaret Sitesi",
+    title: "Full-Stack E-Commerce Platform",
     description:
-      "Premium kullanıcı deneyimine sahip, güvenli ödeme altyapısı ve gelişmiş ürün filtreleme seçenekleri sunan modern e-ticaret platformu.",
+      "A modern e-commerce platform offering a premium user experience, secure payment infrastructure, and advanced product filtering capabilities.",
     tags: ["React", ".NET API", "PostgreSQL", "Tailwind CSS"],
     image: "/ecommerce_mockup.png",
     githubUrl: "#",
     liveUrl: "#",
   },
   {
-    title: "AI Tabanlı Tıbbi Görüntüleme",
+    title: "AI-Powered Medical Imaging",
     description:
-      "Retina taramaları üzerinden diyabetik retinopati tespiti yapabilen, medikal verileri analiz eden yüksek doğruluk oranlı yapay zeka sistemi.",
-    tags: ["Python", "Görüntü İşleme", "Deep Learning"],
+      "A high-accuracy artificial intelligence system that analyzes medical data and detects diabetic retinopathy from retina scans.",
+    tags: ["Python", "Computer Vision", "Deep Learning"],
     image: "/medical_ai_mockup.png",
     githubUrl: "#",
     liveUrl: "#",
